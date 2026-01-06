@@ -1,0 +1,52 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { fetchProducts } from "../api/products.api";
+import { Product } from "../products/products.types";
+import ProductCard from "../products/ProductCard";
+import Loader from "../../components/ui/Loader";
+
+export default function FeaturedProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts()
+      .then(setProducts)
+      .catch((err) => {
+        console.error("❌ Failed to fetch products", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loader message="Loading..." />;
+
+  const featured = products.slice(0, 3);
+
+  return (
+    <section className="py-20 bg-gray-50 text-gray-900">
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">
+          Featured Products
+        </h2>
+
+        {featured.length === 0 ? (
+          <p className="text-gray-600">No featured products available.</p>
+        ) : (
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 mb-12">
+            {featured.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+        )}
+
+        <Link
+          to="/products"
+          className="inline-block px-6 py-3 bg-[#009632] text-white rounded-full font-medium hover:bg-[#008020] transition"
+        >
+          See All Products
+        </Link>
+      </div>
+    </section>
+  );
+}
