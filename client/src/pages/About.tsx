@@ -10,7 +10,7 @@ export default function About() {
         <p className="text-lg text-gray-600 mb-12">
           At <span className="font-semibold text-[#009632]">Amineru Nigeria Enterprises Limited</span>, we believe shopping
           should be simple, enjoyable, and stress-free. That’s why we’ve built
-          a store where quality products meet unbeatable convenience.
+          a store where quality  meet unbeatable convenience.
         </p>
 
         {/* Mission / Values */}
